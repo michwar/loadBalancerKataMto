@@ -43,6 +43,20 @@ public class ServerLoadBalancerTest {
 
 	}
 
+	@Test
+	public void balancingTheServerWithEnoughRoom_fillServerWithAllVms() {
+		Server theServer = a(ServerBuilder.server().withCapacity(100));
+		Vm theFirstVm = a(VmBuilder.vm().ofSize(1));
+		Vm theSecondVm = a(VmBuilder.vm().ofSize(1));
+
+		balancing(aServerListWith(theServer), aVmsListWith(theFirstVm, theSecondVm));
+
+		assertThat(theServer, CurrentLoadPercentageMatcher.hasVmsCount(2));
+		assertThat("server should contain the first vm", theServer.contains(theFirstVm));
+		assertThat("server should contain the second vm", theServer.contains(theSecondVm));
+
+	}
+
 	private Vm[] aVmsListWith(Vm... vms) {
 		return vms;
 	}
