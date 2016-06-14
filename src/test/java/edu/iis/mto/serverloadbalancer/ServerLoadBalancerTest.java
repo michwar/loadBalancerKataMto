@@ -31,6 +31,18 @@ public class ServerLoadBalancerTest {
 		assertThat("server should contain the vm", theServer.contains(theVm));
 	}
 
+	@Test
+	public void balancingServerWithTenSlotCapacity_andOneSlotVm() {
+		Server theServer = a(ServerBuilder.server().withCapacity(10));
+		Vm theVm = a(VmBuilder.vm().ofSize(1));
+
+		balancing(aServerListWith(theServer), aVmsListWith(theVm));
+
+		assertThat(theServer, CurrentLoadPercentageMatcher.hasCurrentLoad(10.0d));
+		assertThat("server should contain the vm", theServer.contains(theVm));
+
+	}
+
 	private Vm[] aVmsListWith(Vm... vms) {
 		return vms;
 	}
