@@ -70,6 +70,18 @@ public class ServerLoadBalancerTest {
 		assertThat("server 1 should not contains vm", !server1.contains(vm));
 	}
 
+	@Test
+	public void balancingServerWithNotEnoughCapacityForVm() {
+		Server server = a(ServerBuilder.server().withCapacity(100).withCurrentLoad(90.0d));
+
+		Vm vm = a(VmBuilder.vm().sizeOf(20));
+
+		balancing(aServerListWith(server), aServerListWith(vm));
+
+		assertThat("server should not contains vm", !server.contains(vm));
+
+	}
+
 	private Vm[] aServerListWith(Vm... vms) {
 		return vms;
 	}
