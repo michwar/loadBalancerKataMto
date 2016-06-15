@@ -17,8 +17,13 @@ public class CountOfVmMatcher extends TypeSafeMatcher<Server> {
 	}
 
 	@Override
+	protected void describeMismatchSafely(Server item, Description description) {
+		description.appendText("a server with vms count of ").appendValue(item.countVms());
+	}
+
+	@Override
 	protected boolean matchesSafely(Server item) {
-		return false;
+		return count == item.countVms();
 	}
 
 }
