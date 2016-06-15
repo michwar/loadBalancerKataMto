@@ -14,7 +14,11 @@ public class Server {
 
 	public void add(Vm vm) {
 		vms.add(vm);
-		currentLoad = (double) vm.size / (double) capacity * MAX_LOAD;
+		currentLoad = vmLoad(vm);
+	}
+
+	private double vmLoad(Vm vm) {
+		return (double) vm.size / (double) capacity * MAX_LOAD;
 	}
 
 	public boolean contains(Vm vm) {
@@ -31,7 +35,7 @@ public class Server {
 	}
 
 	public boolean canFitVm(Vm vm) {
-		return MAX_LOAD >= currentLoad + ((double) vm.size / (double) capacity * 100.0d);
+		return MAX_LOAD >= currentLoad + vmLoad(vm);
 	}
 
 }
