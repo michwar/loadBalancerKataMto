@@ -13,6 +13,11 @@ public class CurrentLoadPercentageMatcher extends TypeSafeMatcher<Server> {
 		this.expectedLoad = expectedLoad;
 	}
 
+	@Override
+	protected void describeMismatchSafely(Server item, Description description) {
+		description.appendText("a server with load percentage of ").appendValue(item.currentLoad);
+	}
+
 	public void describeTo(Description description) {
 		description.appendText("a server with load percentage of ").appendValue(expectedLoad);
 	}
