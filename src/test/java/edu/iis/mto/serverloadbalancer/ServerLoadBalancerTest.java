@@ -72,7 +72,7 @@ public class ServerLoadBalancerTest {
 
 	@Test
 	public void balancingServerWithNotEnoughCapacityForVm() {
-		Server server = a(ServerBuilder.server().withCapacity(100).withCurrentLoad(90.0d));
+		Server server = a(ServerBuilder.server().withCapacity(10).withCurrentLoad(90.0d));
 
 		Vm vm = a(VmBuilder.vm().sizeOf(20));
 
