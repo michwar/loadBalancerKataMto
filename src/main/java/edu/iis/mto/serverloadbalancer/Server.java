@@ -7,7 +7,7 @@ import org.hamcrest.Matcher;
 
 public class Server {
 
-	private static final double MAXIMUM_LOAD = 100.0;
+	private static final double MAXIMUM_LOAD = 100.0d;
 	public double currentLoadPercentage;
 	public int capacity;
 
@@ -23,7 +23,7 @@ public class Server {
 	}
 
 	public void addVm(Vm vm) {
-		currentLoadPercentage = loadOfVm(vm);
+		currentLoadPercentage += loadOfVm(vm);
 		this.vms.add(vm);
 	}
 
