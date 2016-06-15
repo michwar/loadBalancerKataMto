@@ -26,4 +26,8 @@ public class CountOfVmMatcher extends TypeSafeMatcher<Server> {
 		return count == item.countVms();
 	}
 
+	public static CountOfVmMatcher hasVmsCountOf(int count) {
+		return new CountOfVmMatcher(count);
+	}
+
 }
