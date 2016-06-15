@@ -14,21 +14,21 @@ public class ServerLoadBalancerTest {
 
 	@Test
 	public void balancingServerWithNoVm() {
-		Server server = a(server().withCapacity(1));
+		Server server = a(ServerBuilder.server().withCapacity(1));
 
 		balancing(aServerListWith(server), anEmptyVmList());
 
-		assertThat(server, hasCurrentLoadOf(0.0d));
+		assertThat(server, CurrentLoadPercentageMatcher.hasCurrentLoadOf(0.0d));
 	}
 
 	@Test
 	public void balancingOneServerWithOneCapacity_andOneVm() {
-		Server server = a(server().withCapacity(1));
+		Server server = a(ServerBuilder.server().withCapacity(1));
 
-		Vm vm = a(vm().sizeOf(1));
+		Vm vm = a(VmBuilder.vm().sizeOf(1));
 		balancing(aServerListWith(server), aServerListWith(vm));
 
-		assertThat(server, hasCurrentLoadOf(100.0d));
+		assertThat(server, CurrentLoadPercentageMatcher.hasCurrentLoadOf(100.0d));
 		assertThat("server should contains vm ", server.contains(vm));
 	}
 
@@ -38,14 +38,6 @@ public class ServerLoadBalancerTest {
 
 	private Vm a(VmBuilder builder) {
 		return builder.build();
-	}
-
-	private VmBuilder vm() {
-		return new VmBuilder();
-	}
-
-	private Matcher<? super Server> hasCurrentLoadOf(double expectedLoad) {
-		return new CurrentLoadPercentageMatcher(expectedLoad);
 	}
 
 	private void balancing(Server[] servers, Vm[] vms) {
@@ -60,12 +52,8 @@ public class ServerLoadBalancerTest {
 		return servers;
 	}
 
-	private Server a(ServerBuilder builder) {
+	private <T> T a(Builder<T> builder) {
 		return builder.build();
-	}
-
-	private ServerBuilder server() {
-		return new ServerBuilder();
 	}
 
 }
