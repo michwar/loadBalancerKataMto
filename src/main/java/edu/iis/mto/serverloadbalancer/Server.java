@@ -7,7 +7,7 @@ import org.hamcrest.Matcher;
 
 public class Server {
 
-	private static final double MAX_LOAD = 100.0d;
+	public static final double MAX_LOAD = 100.0d;
 	public double currentLoad;
 	public int capacity;
 	private List<Vm> vms = new ArrayList<Vm>();
