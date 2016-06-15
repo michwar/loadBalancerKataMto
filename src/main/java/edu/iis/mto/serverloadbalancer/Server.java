@@ -14,7 +14,7 @@ public class Server {
 
 	public void add(Vm vm) {
 		vms.add(vm);
-		currentLoad = vmLoad(vm);
+		currentLoad += vmLoad(vm);
 	}
 
 	private double vmLoad(Vm vm) {
