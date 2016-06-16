@@ -7,7 +7,7 @@ import org.hamcrest.Matcher;
 
 public class Server {
 
-	private static final double MAX_LOAD = 100.0;
+	public static final double MAX_LOAD = 100.0;
 	public double currentLoadPercentage;
 	public int capacity;
 	private List<Vm> vms = new ArrayList<Vm>();
@@ -26,12 +26,16 @@ public class Server {
 	}
 
 	public void addVm(Vm vm) {
-		currentLoadPercentage = (double) vm.size / (double) capacity * MAX_LOAD;
+		currentLoadPercentage = vmLoad(vm);
 		vms.add(vm);
 	}
 
+	private double vmLoad(Vm vm) {
+		return (double) vm.size / (double) capacity * MAX_LOAD;
+	}
+
 	public boolean canFillVm(Vm vm) {
-		return MAX_LOAD >= currentLoadPercentage + (double) vm.size / (double) capacity * MAX_LOAD;
+		return MAX_LOAD >= currentLoadPercentage + vmLoad(vm);
 	}
 
 }
