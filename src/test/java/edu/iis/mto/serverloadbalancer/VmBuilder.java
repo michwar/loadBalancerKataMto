@@ -1,0 +1,16 @@
+package edu.iis.mto.serverloadbalancer;
+
+public class VmBuilder implements Builder<Vm> {
+
+	private int size;
+
+	public VmBuilder withSizeOf(int size) {
+		this.size = size;
+		return this;
+	}
+
+	public Vm build() {
+		return new Vm();
+	}
+
+}
