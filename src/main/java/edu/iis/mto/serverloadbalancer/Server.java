@@ -30,4 +30,8 @@ public class Server {
 		vms.add(vm);
 	}
 
+	public boolean canFillVm(Vm vm) {
+		return MAX_LOAD >= currentLoadPercentage + (double) vm.size / (double) capacity * MAX_LOAD;
+	}
+
 }

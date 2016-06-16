@@ -6,10 +6,14 @@ public class ServeLoadBalancer {
 		for (Vm vm : vms) {
 			Server lessLoadedServer = null;
 			for (Server server : servers) {
+				if (!server.canFillVm(vm))
+					continue;
+
 				if (null == lessLoadedServer || lessLoadedServer.currentLoadPercentage > server.currentLoadPercentage)
 					lessLoadedServer = server;
 			}
-			lessLoadedServer.addVm(vm);
+			if (null != lessLoadedServer)
+				lessLoadedServer.addVm(vm);
 		}
 	}
 
