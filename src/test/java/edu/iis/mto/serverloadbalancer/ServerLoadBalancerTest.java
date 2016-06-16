@@ -3,7 +3,6 @@ package edu.iis.mto.serverloadbalancer;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-import org.hamcrest.Matcher;
 import org.junit.Test;
 
 public class ServerLoadBalancerTest {
@@ -18,7 +17,7 @@ public class ServerLoadBalancerTest {
 
 		balance(aServersListOf(server), anEmptyVmList());
 
-		assertThat(server, hasCurrentLoadPercentageOf(0.0));
+		assertThat(server, ServerLoadPercentageMatcher.hasCurrentLoadPercentageOf(0.0));
 	}
 
 	@Test
@@ -29,7 +28,7 @@ public class ServerLoadBalancerTest {
 
 		balance(aServersListOf(server), aVmListOf(vm));
 
-		assertThat(server, hasCurrentLoadPercentageOf(100.0));
+		assertThat(server, ServerLoadPercentageMatcher.hasCurrentLoadPercentageOf(100.0));
 
 		assertThat("a server should contain a vm ", server.contains(vm));
 
@@ -43,7 +42,7 @@ public class ServerLoadBalancerTest {
 
 		balance(aServersListOf(server), aVmListOf(vm));
 
-		assertThat(server, hasCurrentLoadPercentageOf(20.0));
+		assertThat(server, ServerLoadPercentageMatcher.hasCurrentLoadPercentageOf(20.0));
 
 		assertThat("a server should contain a vm ", server.contains(vm));
 
@@ -58,14 +57,10 @@ public class ServerLoadBalancerTest {
 
 		balance(aServersListOf(server), aVmListOf(vm1, vm2));
 
-		assertThat(server, vmCountOf(2));
+		assertThat(server, VmCountMatcher.vmCountOf(2));
 
 		assertThat("a server should contain a vm ", server.contains(vm1));
 		assertThat("a server should contain a vm ", server.contains(vm2));
-	}
-
-	private Matcher<? super Server> vmCountOf(int expectedCount) {
-		return new VmCountMatcher(expectedCount);
 	}
 
 	private Vm[] aVmListOf(Vm... vms) {
@@ -74,10 +69,6 @@ public class ServerLoadBalancerTest {
 
 	private VmBuilder vm() {
 		return new VmBuilder();
-	}
-
-	private Matcher<? super Server> hasCurrentLoadPercentageOf(double expectedLoadPercentage) {
-		return new ServerLoadPercentageMatcher(expectedLoadPercentage);
 	}
 
 	private void balance(Server[] servers, Vm[] vms) {
