@@ -63,6 +63,20 @@ public class ServerLoadBalancerTest {
 		assertThat("a server should contain a vm ", server.contains(vm2));
 	}
 
+	@Test
+	public void balancingMultiplServersWithOneVm() {
+		Server server1 = a(server().withCapacity(100).initLoad(50.0));
+		Server server2 = a(server().withCapacity(100).initLoad(45.0));
+
+		Vm vm = a(vm().withSizeOf(2));
+
+		balance(aServersListOf(server1, server2), aVmListOf(vm));
+
+		assertThat("a server should contain a vm ", server2.contains(vm));
+		assertThat("a server should not contain a vm ", !server1.contains(vm));
+
+	}
+
 	private Vm[] aVmListOf(Vm... vms) {
 		return vms;
 	}
